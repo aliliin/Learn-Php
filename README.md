@@ -1,5 +1,5 @@
 # Learn-Php
 
-### Swoole
-### Laravel
+### Swoole  4.5.0-alpha
+### Laravel 7.4.0 | LaravelS 3.7.0 
 ### hyperf
