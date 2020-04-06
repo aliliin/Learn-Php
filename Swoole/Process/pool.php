@@ -1,6 +1,6 @@
 <?php
 
-
+// redis 持久化连接
 $workerNum = 5;
 $pool = new Swoole\Process\Pool($workerNum);
 $pool->on("WorkerStart", function ($pool, $workerId) {
