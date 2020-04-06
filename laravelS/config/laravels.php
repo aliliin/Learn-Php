@@ -8,7 +8,7 @@ return [
     'listen_ip'                => env('LARAVELS_LISTEN_IP', '127.0.0.1'),
     'listen_port'              => env('LARAVELS_LISTEN_PORT', 5200),
     'socket_type'              => defined('SWOOLE_SOCK_TCP') ? SWOOLE_SOCK_TCP : 1,
-    'enable_coroutine_runtime' => false,
+    'enable_coroutine_runtime' => true,# 以不要打开协程，仅自定义进程中可使用协程。运行时协程 打开
     'server'                   => env('LARAVELS_SERVER', 'LaravelS'),
     'handle_static'            => env('LARAVELS_HANDLE_STATIC', false),
     'laravel_base_path'        => env('LARAVEL_BASE_PATH', base_path()),
@@ -19,7 +19,9 @@ return [
         'excluded_dirs' => [],
         'log'           => true,
     ],
-    'event_handlers'           => [],
+    'event_handlers'           => [
+        'WorkerStart' => \App\Listeners\WorkerStartEventListener::class,
+    ],
     'websocket'                => [
         'enable' => true,
         'handler' => \App\Services\WebSocketService::class,
@@ -32,9 +34,14 @@ return [
         //    'pipe'     => 0 // The type of pipeline, 0: no pipeline 1: SOCK_STREAM 2: SOCK_DGRAM
         //    'enable'   => true // Whether to enable, default true
         //],
+        [
+            'class'    => \App\Processes\TestProcess::class,
+            'redirect' => false, // 是否将输入输出重定向到 stdin/stdout, true or false
+            'pipe'     => 0 // 管道类型, 0: 不使用管道 1: SOCK_STREAM 2: SOCK_DGRAM
+        ],
     ],
     'timer'                    => [
-        'enable'        => env('LARAVELS_TIMER', true),
+        'enable'        => env('LARAVELS_TIMER', false),
         'jobs'          => [
             // Enable LaravelScheduleJob to run `php artisan schedule:run` every 1 minute, replace Linux Crontab
             //\Hhxsv5\LaravelS\Illuminate\LaravelScheduleJob::class,
@@ -45,7 +52,16 @@ return [
         ],
         'max_wait_time' => 5,   // Max waiting time of reloading
     ],
-    'swoole_tables'            => [],
+    // 共享内存读写工具 Swoole\Table 该工具是一个基于共享内存和锁实现的高性能并发数据结构，可用于解决多进程/多线程数据共享和同步加锁问题
+    'swoole_tables'            => [
+        'ws' => [ // 表名，会加上 Table 后缀，比如这里是 wsTable
+            'size'   => 102400, //  表容量
+            'column' => [ // 表字段，字段名为 value
+                ['name' => 'value', 'type' => \Swoole\Table::TYPE_INT, 'size' => 8],
+            ],
+        ],
+        // 还可以定义其它表
+    ],
     'register_providers'       => [],
     'cleaners'                 => [
         // See LaravelS's built-in cleaners: https://github.com/hhxsv5/laravel-s/blob/master/Settings.md#cleaners
@@ -61,7 +77,7 @@ return [
         'dispatch_mode'      => 2,
         'reactor_num'        => env('LARAVELS_REACTOR_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 4),
         'worker_num'         => env('LARAVELS_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
-        //'task_worker_num'    => env('LARAVELS_TASK_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
+        'task_worker_num'    => env('LARAVELS_TASK_WORKER_NUM', function_exists('swoole_cpu_num') ? swoole_cpu_num() * 2 : 8),
         'task_ipc_mode'      => 1,
         'task_max_request'   => env('LARAVELS_TASK_MAX_REQUEST', 8000),
         'task_tmpdir'        => @is_writable('/dev/shm/') ? '/dev/shm' : '/tmp',
@@ -77,9 +93,10 @@ return [
         'reload_async'       => true,
         'max_wait_time'      => 60,
         'enable_reuse_port'  => true,
-        'enable_coroutine'   => false,
+        'enable_coroutine'   => true,#所以不要打开协程，仅自定义进程中可使用协程。
         'http_compression'   => false,
 
+        // WebSocket 长连接的强制关闭逻辑
         // 每隔 60s 检测一次所有连接，如果某个连接在 600s 内都没有发送任何数据，则关闭该连接
         'heartbeat_idle_time'      => 600,
         'heartbeat_check_interval' => 60,

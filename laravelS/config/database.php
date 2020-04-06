@@ -60,6 +60,7 @@ return [
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::ATTR_PERSISTENT => true // mysql 持久化连接设置。LaravelS 会在自动维护 MySQL 的连接状态，一旦断开，会立即重连
             ]) : [],
         ],
 
@@ -132,6 +133,8 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_DB', '0'),
+            'persistent' => true // redis 持久化连接 
+            // Redis 持久连接状态则不会自动维护，断开时会抛出异常，需要开发者自行维护持久连接的异常断开情况
         ],
 
         'cache' => [
