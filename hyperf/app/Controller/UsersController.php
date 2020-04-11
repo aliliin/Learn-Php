@@ -39,7 +39,8 @@ class UsersController extends AbstractController
      */
     public function userInfo(RequestInterface $request,$uid)
     {
-
+        var_dump($request->getQueryParams() );
+        var_dump($request->all() );
         $userService = $this->userService->getUsername((int) $uid);
         return ['id' => $uid, 'UserName' => $userService];
         

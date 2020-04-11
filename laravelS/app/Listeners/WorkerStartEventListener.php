@@ -15,5 +15,6 @@ class WorkerStartEventListener implements WorkerStartInterface
     public function handle(Server $server, $workerId)
     {
         Log::info('Worker/Task Process Started');
+       
     }
 }

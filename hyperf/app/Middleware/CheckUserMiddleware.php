@@ -29,6 +29,8 @@ class CheckUserMiddleware implements MiddlewareInterface
     {
         echo "checkUser".PHP_EOL;
         $uid = $this->request->route('uid',0);
+        $request = $request->withQueryParams( [ 'uid234' => 1 ] );
+
         if($uid == 11){
             return $this->response->json(['result' => 'is a secret']);
         }
