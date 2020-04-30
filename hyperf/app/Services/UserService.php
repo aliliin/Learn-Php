@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://doc.hyperf.io
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
+ */
 namespace App\Services;
 
 class UserService
@@ -7,9 +16,8 @@ class UserService
     public function getUsername(int $uid): string
     {
         if ($uid == 11) {
-            return "Aliliin";
-        } else {
-            return '不存在';
+            return 'Aliliin';
         }
+        return '不存在';
     }
 }

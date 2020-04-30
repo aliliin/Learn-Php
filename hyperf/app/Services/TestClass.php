@@ -9,18 +9,22 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf-cloud/hyperf/blob/master/LICENSE
  */
-namespace App\Constants;
+namespace App\Services;
 
-use Hyperf\Constants\AbstractConstants;
-use Hyperf\Constants\Annotation\Constants;
-
-/**
- * @Constants
- */
-class ErrorCode extends AbstractConstants
+class TestClass
 {
+    public $name;
+
+    public $age;
+
     /**
-     * @Message("Server Error！")
+     * TestClass constructor.
+     * @param $name
+     * @param $age
      */
-    const SERVER_ERROR = 500;
+    public function __construct($name, $age)
+    {
+        $this->name = $name;
+        $this->age = $age;
+    }
 }
