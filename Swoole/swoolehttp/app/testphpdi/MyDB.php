@@ -8,7 +8,7 @@ class MyDB
 {
     private $db;
 
-    public function __construct($connInfo)
+    public function __construct($connInfo = '')
     {
         // todo...
     }

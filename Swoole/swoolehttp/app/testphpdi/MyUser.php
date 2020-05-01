@@ -4,11 +4,17 @@
 namespace App\testphpdi;
 
 
+use DI\Annotation\Inject;
+
 class MyUser
 {
     private $mydb;
 
-    public function __construct(myDB $DB)
+    /**
+     * @Inject()
+     * @param MyDB $DB
+     */
+    public function __construct(MyDB $DB)
     {
         $this->mydb = $DB;
     }

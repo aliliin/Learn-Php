@@ -60,6 +60,7 @@ $user = ClassFactory::get('User');
 var_dump($user->getAll('22'));
 die;
 
+// 控制顺序会发生变化
 $db = new myDB('ddsdse');
 $user = new User($db);
 var_dump($user->getAll('2'));

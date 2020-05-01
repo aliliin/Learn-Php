@@ -1,5 +1,5 @@
 {
-    "name": "alilin/swoole-http",
+    "name": "alilin/swoolehttp",
     "authors": [
         {
             "name": "aliliin",
@@ -8,7 +8,8 @@
     ],
     "require": {
         "nikic/fast-route": "^1.3",
-        "php-di/php-di": "^6.0"
+        "php-di/php-di": "^6.0",
+        "doctrine/annotations": "^1.10"
     },
     "autoload": {
         "psr-4": {
