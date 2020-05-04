@@ -20,8 +20,9 @@ class ClassFactory
         foreach ($phpfiles as $php) {
             require($php);
         }
-        $reader = new AnnotationReader();
         $classes = get_declared_classes();
+
+        $reader = new AnnotationReader();
         foreach ($classes as $class) {
             if (strstr($class, $namespace)) {
                 $refClass = new \ReflectionClass($class);
@@ -46,6 +47,7 @@ class ClassFactory
     {
         $refClass = new \ReflectionClass($className);
         $properties = $refClass->getProperties();
+
         $reader = new AnnotationReader();
         foreach ($properties as $property) {
             $myAnnotation = $reader->getPropertyAnnotations($property);
@@ -56,6 +58,7 @@ class ClassFactory
                 return $retObj;
             }
         }
+
         return $object ? $object : $refClass->newInstance();
     }
 

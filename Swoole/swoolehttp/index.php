@@ -11,7 +11,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     });
 });
 
-$http = new Swoole\Http\Server('0.0.0.0', 8090);
+$http = new Swoole\Http\Server('0.0.0.0', 9501);
+
 $http->on('request', function (Request $request, Response $response) use ($dispatcher) {
     $myRequest = \App\core\Request::init($request);
     $routeInfo = $dispatcher->dispatch($myRequest->getMethod(), $myRequest->getUri());
