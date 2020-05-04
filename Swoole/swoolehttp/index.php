@@ -28,8 +28,7 @@ $http->on('request', function (Request $request, Response $response) use ($dispa
         case FastRoute\Dispatcher::FOUND:
             $handler = $routeInfo[1];
             $response->end($handler());
-
-//            $vars = $routeInfo[2];
+            // $vars = $routeInfo[2];
             // ... call $handler with $vars
             break;
     }
