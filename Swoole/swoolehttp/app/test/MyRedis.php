@@ -7,6 +7,7 @@ use App\annotations\Bean;
 use App\annotations\Value;
 
 // 写上 bean 注解就可以使用关联到
+
 /**
  * @Bean()
  * Class MyRedis

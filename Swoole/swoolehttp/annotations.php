@@ -12,7 +12,7 @@ use App\core\ClassFactory;
 // 注册注解的命名空间
 AnnotationRegistry::registerLoader('class_exists');
 
-ClassFactory::ScanBeans(__DIR__.'/app/test','App\\test');
+ClassFactory::ScanBeans(__DIR__ . '/app/test', 'App\\test');
 $class = ClassFactory::getBeans(MyRedis::class);
 var_dump($class);
 

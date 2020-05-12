@@ -39,6 +39,10 @@ class ComposerStaticInit56e305dd4db5d9d0a8de81678721eedf
             'Doctrine\\Common\\Annotations\\' => 28,
             'DI\\' => 3,
         ),
+        'C' => 
+        array (
+            'Core\\' => 5,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -89,6 +93,10 @@ class ComposerStaticInit56e305dd4db5d9d0a8de81678721eedf
         'DI\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/php-di/src',
+        ),
+        'Core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/core',
         ),
         'App\\' => 
         array (

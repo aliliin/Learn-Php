@@ -1,20 +1,19 @@
 <?php
 require_once __DIR__ . "/vendor/autoload.php";
+require_once __DIR__ . "/app/config/define.php";
+
 
 use Swoole\Http\Response;
 use Swoole\Http\Request;
 
+\Core\BeanFactory::init();
 
-$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    $r->addRoute('GET', '/test', function () {
-        return 'my test';
-    });
-});
+$dispatcher = \Core\BeanFactory::getBean("RouterCollects")->getDispatcher();
+
 
 $http = new Swoole\Http\Server('0.0.0.0', 9501);
-
 $http->on('request', function (Request $request, Response $response) use ($dispatcher) {
-    $myRequest = \App\core\Request::init($request);
+    $myRequest = \Core\Http\Request::init($request);
     $routeInfo = $dispatcher->dispatch($myRequest->getMethod(), $myRequest->getUri());
     // [1,$dispatcher,$var] 有三个值
     switch ($routeInfo[0]) {

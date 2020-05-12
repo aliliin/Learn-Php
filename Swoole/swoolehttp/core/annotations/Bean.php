@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\annotations;
+namespace Core\annotations;
 
 
 use Doctrine\Common\Annotations\Annotation\Target;
@@ -14,5 +14,5 @@ use Doctrine\Common\Annotations\Annotation\Target;
  */
 class Bean
 {
-
+    public $name = "";
 }
