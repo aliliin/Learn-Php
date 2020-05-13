@@ -28,7 +28,7 @@ $http->on('request', function (Request $request, Response $response) use ($dispa
         case FastRoute\Dispatcher::FOUND:
             $handler = $routeInfo[1];
             $vars = $routeInfo[2];// ... call $handler with $vars
-            $extVars = [$myRequest,$myResponse];
+            $extVars = [$myRequest, $myResponse];
             // 设置响应 body 部分
             $myResponse->setBody($handler($vars, $extVars));
             $myResponse->end();
