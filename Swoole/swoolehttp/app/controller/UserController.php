@@ -17,11 +17,11 @@ class UserController
     public $version;
 
     /**
-     * @RequestMapping(value="/index")
+     * @RequestMapping(value="/index/{uid:\d+}")
      */
-    public function index()
+    public function index(string $name, int $uid)
     {
-        return "Aliliin";
+        return "Aliliin" . $uid;
     }
 
     /**
