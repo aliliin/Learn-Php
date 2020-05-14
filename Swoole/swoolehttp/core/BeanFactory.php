@@ -113,7 +113,7 @@ class BeanFactory
         $reader = new AnnotationReader();
 
         foreach (get_declared_classes() as $getDeclaredClass) {
-            if (strstr($getDeclaredClass, $scanRootNamespace)) {
+            if (strstr($getDeclaredClass, $scanRootNamespace) && !strstr($getDeclaredClass, $scanRootNamespace . 'annotations')) {
                 // 目标类的反射对象
                 $refClass = new \ReflectionClass($getDeclaredClass);
                 // 获取所有类注解
@@ -121,6 +121,7 @@ class BeanFactory
 
                 // 处理类注解
                 foreach ($myAnnotation as $annotation) {
+                    if (!isset(self::$annotationHandlers[get_class($annotation)])) continue;
                     // 读取注解的类名
                     $handle = self::$annotationHandlers[get_class($annotation)];
                     $instance = self::$containers->get($refClass->getName());
@@ -148,6 +149,7 @@ class BeanFactory
         foreach ($props as $prop) {
             $propAnnos = $reader->getPropertyAnnotations($prop);
             foreach ($propAnnos as $propAnno) {
+                if (!isset(self::$annotationHandlers[get_class($propAnno)])) continue;
                 $handle = self::$annotationHandlers[get_class($propAnno)];
                 $instance = $handle($prop, $instance, $propAnno);// 处理属性注解
             }
@@ -166,6 +168,7 @@ class BeanFactory
         foreach ($methods as $method) {
             $methodAnnos = $reader->getMethodAnnotations($method);
             foreach ($methodAnnos as $methodAnno) {
+                if (!isset(self::$annotationHandlers[get_class($methodAnno)])) continue;
                 $handle = self::$annotationHandlers[get_class($methodAnno)];
                 $instance = $handle($method, $instance, $methodAnno);// 处理方法注解
             }

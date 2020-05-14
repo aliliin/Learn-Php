@@ -3,16 +3,24 @@
 namespace App\controller;
 
 use Core\annotations\Bean;
+use Core\annotations\DB;
 use Core\annotations\RequestMapping;
 use Core\annotations\Value;
 use Core\Http\Request;
 use Core\http\Response;
+use Core\init\MyDB;
+use DI\Annotation\Inject;
 
 /**
  * @Bean(name="Aliliin")
  */
 class UserController
 {
+    /**
+     * @DB()
+     * @var MyDB
+     */
+    private $db;
     /**
      * @Value(name="version")
      */
@@ -51,6 +59,14 @@ class UserController
             "value" => '测试中文',
             "测试自动加载" => true,
         ];
+    }
+
+    /**
+     * @RequestMapping(value="/testdb")
+     */
+    public function testdb()
+    {
+        return $this->db->table('users')->get();
     }
 
 }
