@@ -1,9 +1,9 @@
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . "/app/config/define.php";
 
 
-use \Swoole\Http\Server;
 use \Swoole\Process;
 use \Core\server\HttpServer;
 

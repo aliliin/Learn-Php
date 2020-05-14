@@ -4,6 +4,7 @@
 namespace Core\init;
 
 
+use Core\helper\FilesHelper;
 use Swoole\Process;
 
 class TestProcess
@@ -15,13 +16,9 @@ class TestProcess
         return new Process(function () {
             while (true) {
                 sleep(3);
-                // 判断文件变动自动重启
-                $files = glob(__DIR__ . '/../../*.php');
-                $md5FileArr = [];
-                foreach ($files as $file) {
-                    $md5FileArr[] = md5_file($file);
-                }
-                $md5Value = md5(implode("", $md5FileArr));
+
+                $md5Value = FilesHelper::getFileMd5(ROOT_PATH . "/app/*", '/app/config');
+
                 if ($this->md5File == "") {
                     $this->md5File = $md5Value;
                     continue;

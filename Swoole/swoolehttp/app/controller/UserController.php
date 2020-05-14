@@ -39,7 +39,7 @@ class UserController
      */
     public function test(Request $request, int $uid, Response $response)
     {
-        $response->redirect("http://www.baidu.com");
+//        $response->redirect("http://www.baidu.com");
 
 //        $response->writeHtml("你好吗");
 //        $response->testWrite("abc");
@@ -48,7 +48,8 @@ class UserController
 //        return "user" . $uid;
         return [
             "user" => $uid,
-            "value" => '测试中文'
+            "value" => '测试中文',
+            "测试自动加载" => true,
         ];
     }
 

@@ -13,7 +13,7 @@ class Response
     public function __construct($swooleReponse)
     {
         $this->swooleReponse = $swooleReponse;
-        $this->setHeader('content-type', 'text/plain;charset=utf-8', true);
+        $this->setHeader('content-type', 'text/plain;charset=UTF-8', true);
     }
 
     public static function init(\Swoole\Http\Response $response)
@@ -27,7 +27,7 @@ class Response
         $jsonConver = ['array'];
         $result = $this->getBody();
         if (in_array(gettype($result), $jsonConver)) {
-            $this->swooleReponse->header("Content-type", "application/json;charset=uft-8");
+            $this->swooleReponse->header("Content-type", "application/json;charset=UTF-8");
             $this->swooleReponse->write(json_encode($result));
         } else {
             $this->swooleReponse->write($result);

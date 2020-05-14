@@ -1,4 +1,4 @@
-scan_dir=./app/controller
+scan_dir=./app
 scan_root_namespace=App\
 
 version=1.4

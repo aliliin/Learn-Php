@@ -3,7 +3,9 @@
 
 namespace Core\server;
 
+use Core\BeanFactory;
 use Core\init\TestProcess;
+use FastRoute\Dispatcher;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use \Swoole\Http\Server;
@@ -13,6 +15,8 @@ use \Swoole\Process;
 class HttpServer
 {
     private $server;
+
+    private $dispatcher;
 
     public function __construct()
     {
@@ -37,7 +41,8 @@ class HttpServer
 
     public function onWorkerStart(Server $server, $workerId)
     {
-        require_once(__DIR__ . '/../../testaliliin.php');
+        BeanFactory::init();
+        $this->dispatcher = BeanFactory::getBean("RouterCollects")->getDispatcher();
         // 设置进程名称
         //  cli_set_process_title("aliliin worker");
     }
@@ -56,7 +61,28 @@ class HttpServer
 
     public function onRequest(Request $request, Response $response)
     {
-        $response->end(index());
+
+        $myRequest = \Core\Http\Request::init($request);
+        $myResponse = \Core\http\Response::init($response);
+        $routeInfo = $this->dispatcher->dispatch($myRequest->getMethod(), $myRequest->getUri());
+        // [1,$dispatcher,$var] 有三个值
+        switch ($routeInfo[0]) {
+            case Dispatcher::NOT_FOUND:
+                $response->status(404);
+                break;
+            case Dispatcher::METHOD_NOT_ALLOWED:
+                $allowedMethods = $routeInfo[1];
+                $response->status(405);
+                break;
+            case Dispatcher::FOUND:
+                $handler = $routeInfo[1];
+                $vars = $routeInfo[2];// ... call $handler with $vars
+                $extVars = [$myRequest, $myResponse];
+                // 设置响应 body 部分
+                $myResponse->setBody($handler($vars, $extVars));
+                $myResponse->end();
+                break;
+        }
     }
 
     public function onStart(Server $server)

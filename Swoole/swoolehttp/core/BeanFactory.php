@@ -69,8 +69,6 @@ class BeanFactory
         foreach ($scans as $scanDir => $scanRootNamespace) {
             self::ScanBeans($scanDir, $scanRootNamespace);
         }
-
-
     }
 
 
@@ -81,17 +79,38 @@ class BeanFactory
     }
 
     /**
-     * 扫描框架文件
+     * 处理app目录下的文件
+     * @param string $dir app/
+     * @return array
      */
-    private static function ScanBeans($scanDir, $scanRootNamespace)
+    private static function getAllBeanFiles(string $dir)
     {
-        $files = glob($scanDir . "/*.php");
+        $files = glob($dir . '/*');
+
+        $result = [];
         foreach ($files as $file) {
+            if (is_dir($file)) {// 如果是文件夹，就递归
+                // 递归合并，防止数组变成了嵌套的多维数组
+                $result = array_merge($result, self::getAllBeanFiles($file));
+            } elseif (pathinfo($file)['extension'] == "php") {
+                $result[] = $file;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * 扫描框架文件 处理注解
+     */
+    private static function ScanBeans(string $sCanDir, string $scanRootNamespace)
+    {
+        // 递归支持多级目录文件扫描
+        $allFiles = self::getAllBeanFiles($sCanDir);
+        foreach ($allFiles as $file) {
             require_once $file;
         }
 
         $reader = new AnnotationReader();
-
 
         foreach (get_declared_classes() as $getDeclaredClass) {
             if (strstr($getDeclaredClass, $scanRootNamespace)) {

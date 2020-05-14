@@ -3,15 +3,17 @@
 
 namespace App\test;
 
-use App\annotations\Bean;
-use App\annotations\Value;
+use Core\annotations\Bean;
+use Core\annotations\RequestMapping;
+use Core\annotations\Value;
+
 
 // 写上 bean 注解就可以使用关联到
 
 /**
  * @Bean()
  * Class MyRedis
- * @package App\test
+ * @package
  */
 class MyRedis
 {
@@ -20,4 +22,12 @@ class MyRedis
      */
     public $conn_url;
 
+
+    /**
+     * @RequestMapping(value="/myredis")
+     */
+    public function index()
+    {
+        return "test redis controller ";
+    }
 }
