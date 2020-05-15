@@ -5,6 +5,7 @@ namespace Core;
 use DI\ContainerBuilder;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use mysql_xdevapi\Exception;
 
 class BeanFactory
 {
@@ -177,6 +178,16 @@ class BeanFactory
 
     public static function getBean($name)
     {
-        return self::$containers->get($name);
+        try {
+            return self::$containers->get($name);
+        } catch (\Exception $exception) {
+            return false;
+        }
+
+    }
+
+    public static function setBean($name, $value)
+    {
+        return self::$containers->set($name, $value);
     }
 }

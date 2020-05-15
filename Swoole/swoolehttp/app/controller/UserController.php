@@ -21,6 +21,13 @@ class UserController
      * @var MyDB
      */
     private $db;
+
+    /**
+     * @DB(source="slave")
+     * @var MyDB
+     */
+    private $slaveDB;
+
     /**
      * @Value(name="version")
      */
@@ -68,5 +75,14 @@ class UserController
     {
         return $this->db->table('users')->get();
     }
+
+    /**
+     * @RequestMapping(value="/testdb1")
+     */
+    public function testdb1()
+    {
+        return $this->slaveDB->table('users')->get();
+    }
+
 
 }

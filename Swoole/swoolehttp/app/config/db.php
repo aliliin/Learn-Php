@@ -11,7 +11,7 @@ return [
         'collation' => 'utf8_unicode_ci',
         'prefix' => '',
     ],
-    "salve" => [
+    "slave" => [
         'driver' => 'mysql',
         'host' => 'localhost',
         'database' => 'laravel6',

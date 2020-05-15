@@ -34,7 +34,6 @@ class MyDB
     }
 
 
-
     public function __construct()
     {
         global $GLOBALS_CONFIGS;
