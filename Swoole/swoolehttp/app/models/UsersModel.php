@@ -4,8 +4,12 @@
 namespace App\models;
 
 
+
+use Core\lib\BaseModel;
+
 class UsersModel extends BaseModel
 {
-    protected $table = "user";
+    protected $table = "users";
+    protected  $connection = "slave";
 
 }

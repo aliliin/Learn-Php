@@ -2,6 +2,7 @@
 
 namespace App\controller;
 
+use App\models\UsersModel;
 use Core\annotations\Bean;
 use Core\annotations\DB;
 use Core\annotations\RequestMapping;
@@ -73,7 +74,8 @@ class UserController
      */
     public function testdb()
     {
-        return $this->db->table('users')->get();
+        return UsersModel::first();
+//        return $this->db->table('users')->get();
     }
 
     /**
@@ -81,6 +83,7 @@ class UserController
      */
     public function testdb1()
     {
+        return UsersModel::all();
         return $this->slaveDB->table('users')->get();
     }
 
