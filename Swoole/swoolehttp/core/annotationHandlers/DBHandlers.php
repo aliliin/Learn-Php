@@ -20,9 +20,11 @@ return [
                 $myDbBean = clone BeanFactory::getBean(MyDB::class);
                 $myDbBean->setDbSource($self->source);
                 BeanFactory::setBean($beanName, $myDbBean);
+            } else {
+                $myDbBean = clone $myDbBean;
             }
         } else {
-            $myDbBean = BeanFactory::getBean(MyDB::class);
+            $myDbBean = clone BeanFactory::getBean(MyDB::class);
         }
 
         // 处理私有属性

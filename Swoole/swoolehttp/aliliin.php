@@ -2,6 +2,10 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . "/app/config/define.php";
+/**
+ * 运行 数据库链接池
+ */
+\Swoole\Runtime::enableCoroutine(true);
 
 
 use \Swoole\Process;

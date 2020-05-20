@@ -24,7 +24,7 @@ class Response
     public function end()
     {
         // string array object
-        $jsonConver = ['array'];
+        $jsonConver = ['array','object'];
         $result = $this->getBody();
         if (in_array(gettype($result), $jsonConver)) {
             $this->swooleReponse->header("Content-type", "application/json;charset=UTF-8");
