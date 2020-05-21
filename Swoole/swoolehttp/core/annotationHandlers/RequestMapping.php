@@ -5,6 +5,7 @@ namespace Core\annotationHandlers;
 
 use Core\annotations\RequestMapping;
 use Core\BeanFactory;
+use Core\init\DecoratorCollector;
 
 /**
  * 路由收集器
@@ -35,8 +36,9 @@ return [
                 }
                 next:
             }
-
-            return $method->invokeArgs($instance, $inputParams);
+            $decoratorCollector = BeanFactory::getBean(DecoratorCollector::class);
+            return $decoratorCollector->exec($method, $instance, $inputParams);
+//            return $method->invokeArgs($instance, $inputParams);
         });
         return $instance;
     }

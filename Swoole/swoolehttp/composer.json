@@ -10,7 +10,8 @@
         "nikic/fast-route": "^1.3",
         "php-di/php-di": "^6.0",
         "doctrine/annotations": "^1.10",
-        "illuminate/database": "^7.11"
+        "illuminate/database": "^7.11",
+      "ext-json": "*"
     },
     "autoload": {
         "psr-4": {
