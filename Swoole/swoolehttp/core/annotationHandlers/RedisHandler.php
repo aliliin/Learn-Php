@@ -81,7 +81,24 @@ function redisByHash(Redis $self, array $params, $function)
 
 function redisBySortedSet(Redis $self, array $params, $function)
 {
-    $getData = call_user_func($function, ...$params);
+    // 协程获取
+    if ($self->coroutine) {
+        $channel = call_user_func($function, ...$params);
+        $getData = [];
+        for ($i = 0; $i < $channel->capacity; $i++) {
+            $res = $channel->pop(2);
+            if (!$res) continue;
+            $getData = array_merge($getData, $res);
+        }
+
+        if (!$getData) {
+            return ['result' => 'success'];
+        }
+        echo "使用了协程 \n";
+    } else {
+        $getData = call_user_func($function, ...$params);
+    }
+
     if (is_object($getData)) {
         $getData = json_decode(json_encode($getData), 1);
     }

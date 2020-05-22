@@ -20,4 +20,5 @@ class Redis
     public $incr = ''; // 暂时只支持 hash 类型
     public $member = ''; // sortedset 专用
     public $score = '';// 这个属性是给 sortedset 用的
+    public bool $coroutine = false;
 }
