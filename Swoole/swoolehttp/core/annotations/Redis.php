@@ -21,4 +21,5 @@ class Redis
     public $member = ''; // sortedset 专用
     public $score = '';// 这个属性是给 sortedset 用的
     public bool $coroutine = false;
+    public $script = null; // lua
 }

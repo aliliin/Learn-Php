@@ -110,6 +110,11 @@ function redisBySortedSet(Redis $self, array $params, $function)
     return ['result' => 'success'];
 }
 
+function redisByLua(Redis $self, array $params, $function)
+{
+    return RedisHelper::eval($self->script);
+}
+
 return [
     Redis::class => function (\ReflectionMethod $method, $instance, $self) {
         $decoratorCollector = BeanFactory::getBean(DecoratorCollector::class);
@@ -117,6 +122,9 @@ return [
         // 收集装饰器 放入 装饰器收集类
         $decoratorCollector->dSet[$key] = function ($function) use ($self) {
             return function ($params) use ($function, $self) {
+                if ($self->script != null) {
+                    return redisByLua($self, $params, $function);
+                }
                 if ($self->key != '') { // 处理缓存
                     switch ($self->type) {
                         case "string":

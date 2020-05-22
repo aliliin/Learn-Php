@@ -6,12 +6,14 @@ use App\models\ProductsModel;
 use App\models\UsersModel;
 use Core\annotations\Bean;
 use Core\annotations\DB;
+use Core\annotations\Lock;
 use Core\annotations\Redis;
 use Core\annotations\RequestMapping;
 use Core\annotations\Value;
 use Core\Http\Request;
 use Core\http\Response;
 use Core\init\MyDB;
+use Core\lib\RedisHelper;
 use DI\Annotation\Inject;
 use Swoole\Coroutine\Channel;
 
@@ -84,7 +86,6 @@ class RedisController
      */
     public function stock(Request $request, int $uid, Response $response)
     {
-
 //        return ProductsModel::all();
         // 协程 的方式，加入库存
         $channel = new Channel(6);
@@ -96,5 +97,37 @@ class RedisController
             });
         }
         return $channel;
+    }
+
+    /**
+     * 测试 lua 脚本
+     * @Redis(script="
+    return redis.call('get','name');
+    ")
+     * @RequestMapping(value="/testscript")
+     */
+    public function testscript()
+    {
+
+    }
+
+    /**
+     * 超卖现象解决
+     * @Lock(prefix="lock_product",key="#0")
+     * @RequestMapping(value="/products/buy/{pid:\d+}")
+     */
+    public function buy(int $pid, Request $request)
+    {
+        $key = 'stock';
+        $member = 'p' . $pid;
+        $productStock = RedisHelper::zScore($key, $member);
+        if ($productStock && $productStock > 0) {
+            // 模拟卡顿、同一时间请求的问题
+            if (isset($request->getQueryParams()['delay'])) {
+                sleep(5);
+            }
+            return RedisHelper::zIncrBy($key, -1, $member);
+        }
+        return 0;
     }
 }

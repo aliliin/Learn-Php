@@ -16,6 +16,8 @@ use Core\init\PHPRedisPool;
  * @method static bool hmset(string $key, array $value)
  * @method static int hIncrBy($key, $hashKey, $value)
  * @method static int zAdd($key, $options, $score1, $value1)
+ * @method static mixed eval($script, $args = array(), $numKeys = 0)
+ * @method static float|bool zScore(string $key, string|mixed $member)
  */
 class RedisHelper
 {
