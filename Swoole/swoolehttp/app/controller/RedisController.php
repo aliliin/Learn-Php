@@ -63,4 +63,14 @@ class RedisController
     {
         return ProductsModel::all();
     }
+
+    /**
+     * 库存
+     * @Redis(key="p_id",prefix="stock",type="sortedset",member="p",score="p_stock")
+     * @RequestMapping(value="/stock")
+     */
+    public function stock(Request $request, int $uid, Response $response)
+    {
+        return ProductsModel::all();
+    }
 }

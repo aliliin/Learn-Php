@@ -79,6 +79,20 @@ function redisByHash(Redis $self, array $params, $function)
     }
 }
 
+function redisBySortedSet(Redis $self, array $params, $function)
+{
+    $getData = call_user_func($function, ...$params);
+    if (is_object($getData)) {
+        $getData = json_decode(json_encode($getData), 1);
+    }
+
+    foreach ($getData as $getDatum) {
+        RedisHelper::zAdd($self->prefix, [], $getDatum[$self->score], $self->member . $getDatum[$self->key]);
+    }
+
+    return ['result' => 'success'];
+}
+
 return [
     Redis::class => function (\ReflectionMethod $method, $instance, $self) {
         $decoratorCollector = BeanFactory::getBean(DecoratorCollector::class);
@@ -92,6 +106,8 @@ return [
                             return redisByStaring($self, $params, $function);
                         case "hash":
                             return redisByHash($self, $params, $function);
+                        case "sortedset":
+                            return redisBySortedSet($self, $params, $function);
                         default:
                             return call_user_func($function, ...$params);
                     }
