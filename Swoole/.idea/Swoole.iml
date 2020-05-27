@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/swoolehttp/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/swoolehttp/core" isTestSource="false" packagePrefix="Core\" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/illuminate/container" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/illuminate/contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/illuminate/database" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/illuminate/support" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/jeremeamia/superclosure" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/nesbot/carbon" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/nikic/fast-route" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/php-di/invoker" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/php-di/php-di" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/php-di/phpdoc-reader" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/polyfill-php56" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/polyfill-php73" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/polyfill-util" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/symfony/translation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/swoolehttp/vendor/voku/portable-ascii" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
